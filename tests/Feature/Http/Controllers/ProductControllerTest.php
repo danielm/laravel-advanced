@@ -82,7 +82,7 @@ class ProductControllerTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->deleteJson("/api/products/{$product->getKey()}");
+        $response = $this->deleteJson(route('products.destroy', $product));
 
         $response->assertNoContent();
 
