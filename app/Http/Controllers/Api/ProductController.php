@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\ProductRequest;
 
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductCollection;
+
 class ProductController extends Controller
 {
     /**
@@ -18,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::paginate();
+        return new ProductCollection(Product::latest()->paginate());
     }
 
     /**
@@ -31,7 +34,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->validated());
 
-        return $product;
+        return new ProductResource($product);
     }
 
     /**
@@ -42,7 +45,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
+        return new ProductResource($product);
     }
 
     /**
@@ -56,7 +59,7 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return response()->json($product);
+        return response()->json(new ProductResource($product));
     }
 
     /**
