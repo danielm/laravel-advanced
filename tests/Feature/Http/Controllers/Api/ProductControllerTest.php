@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,7 +34,9 @@ class ProductControllerTest extends TestCase
         $response->assertSuccessful()
             ->assertHeader('content-type', 'application/json')
             ->assertJsonStructure([
-                'current_page',
+                'meta' => [
+                    'current_page'
+                ],
                 'data',
             ])
             ->assertJsonCount(5, 'data');

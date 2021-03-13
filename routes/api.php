@@ -17,7 +17,7 @@ use App\Http\Controllers\Api\UserTokenController;
 |
 */
 
-Route::post('auth/login', [UserTokenController::class, 'login']);
+Route::post('auth/login', [UserTokenController::class, 'login'])->name('auth.login');
 Route::middleware('auth:sanctum')->resource('products', ProductController::class);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
