@@ -9,6 +9,7 @@ use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\User;
 
 class ProductControllerTest extends TestCase
@@ -18,6 +19,8 @@ class ProductControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Category::factory()->create();
 
         Sanctum::actingAs(
             User::factory()->create(),
@@ -47,6 +50,7 @@ class ProductControllerTest extends TestCase
         $data = [
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->randomFloat(2, 20000, 30000),
+            'category_id' => 1
         ];
         $response = $this->postJson(route('products.store'), $data);
 
@@ -61,10 +65,11 @@ class ProductControllerTest extends TestCase
         $data = [
             'name' => '',
             'price' => '',
+            'category_id' => ''
         ];
         $response = $this->postJson(route('products.store'), $data);
 
-        $response->assertJsonValidationErrors(['name', 'price'])
+        $response->assertJsonValidationErrors(['name', 'price', 'category_id'])
             ->assertStatus(422);
     }
 
@@ -75,12 +80,13 @@ class ProductControllerTest extends TestCase
         $data = [
             'name' => 'Update Product',
             'price' => 20000,
+            'category_id' => 1
         ];
 
         $response = $this->patchJson(route('products.update', $product), $data)
             ->assertSuccessful()
             ->assertHeader('content-type', 'application/json')
-            ->assertJson(['name' => $data['name']]);
+            ->assertJson(['name' => $data['name'], 'price' => $data['price']]);
     }
 
     public function test_show_product()
