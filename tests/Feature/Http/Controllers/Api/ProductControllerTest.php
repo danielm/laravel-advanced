@@ -21,6 +21,7 @@ class ProductControllerTest extends TestCase
         parent::setUp();
 
         Category::factory()->create();
+        User::factory()->create();
 
         Sanctum::actingAs(
             User::factory()->create(),
@@ -47,6 +48,8 @@ class ProductControllerTest extends TestCase
 
     public function test_create_new_product()
     {
+        $this->withoutExceptionHandling();
+
         $data = [
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->randomFloat(2, 20000, 30000),

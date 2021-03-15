@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductCollection(Product::latest()->paginate());
+        return new ProductCollection(Product::latest()->with('createdBy')->paginate());
     }
 
     /**
@@ -32,7 +32,11 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = Product::create($request->validated());
+        $data = $request->validated() + [
+            'created_by' => $request->user()->id
+        ];
+
+        $product = Product::create($data);
 
         return new ProductResource($product);
     }

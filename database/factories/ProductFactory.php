@@ -25,6 +25,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->sentence(3),
             'price' => $this->faker->randomFloat(2, 20000, 60000),
             'category_id' => \App\Models\Category::all()->random(),
+            'created_by' => \App\Models\User::all()->random(),
         ];
     }
 }
