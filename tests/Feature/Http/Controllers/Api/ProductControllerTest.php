@@ -21,8 +21,6 @@ class ProductControllerTest extends TestCase
         parent::setUp();
 
         Category::factory()->create();
-        User::factory()->create();
-
         Sanctum::actingAs(
             User::factory()->create(),
             ['*']

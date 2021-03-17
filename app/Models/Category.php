@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
+use App\Traits\CanBeRated;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, CanBeRated;
 
     public $fillable = [
         'name'
