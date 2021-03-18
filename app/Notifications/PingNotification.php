@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PingNotification extends Notification
+class PingNotification extends Notification/* implements ShouldQueue*/
 {
     use Queueable;
 
@@ -29,7 +29,7 @@ class PingNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail'];//database
     }
 
     /**
@@ -40,10 +40,20 @@ class PingNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        /*return (new MailMessage)
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Thank you for using our application!');*/
+        
+        return (new MailMessage)
+                    ->view(
+                        'emails.ping_html',
+                        //['emails.ping_html', 'emails.ping_plain'],
+                        ['now' => now()]
+                    )
+                    ->subject('Ping Notification Subject');
+
+        //->error()
     }
 
     /**

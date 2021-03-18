@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Models\User;
+use App\Notifications\PingNotification;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+
+
+Route::get('/notification', function () {
+    $user = User::find(1);
+
+    return (new PingNotification())
+        ->toMail($user);
 });

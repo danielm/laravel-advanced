@@ -43,7 +43,13 @@ class SendPingCommand extends Command
             $this->output->progressStart($count);
 
             $users->each(function(User $user){
-                $user->notify(new PingNotification());
+                $user->notify(new PingNotification());//->delay($delay));
+
+                /*->delay([
+                    'mail' => now()->addMinutes(5),
+                    'sms' => now()->addMinutes(10),
+                ]));*/
+
                 //sleep(2);
 
                 $this->output->progressAdvance();
