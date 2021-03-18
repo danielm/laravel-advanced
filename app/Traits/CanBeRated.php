@@ -5,6 +5,8 @@ namespace App\Traits;
 use App\Models\Rating;
 use App\Models\User;
 
+use App\Events\EntityRatedEvent;
+
 trait CanBeRated
 {
   public function ratings()
@@ -26,5 +28,7 @@ trait CanBeRated
       'score' => $score,
       'user_id' => $user->id
     ]);
+
+    event(new EntityRatedEvent($this, $user, $score));
   }
 }
