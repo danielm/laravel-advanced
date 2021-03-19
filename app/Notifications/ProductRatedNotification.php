@@ -51,7 +51,7 @@ class ProductRatedNotification extends Notification implements ShouldQueue
     public function viaQueues()
     {
         return [
-            'mail' => 'mail-queue',
+            'mail' => 'mail-queue',//
             //'slack' => 'slack-queue',
         ];
     }

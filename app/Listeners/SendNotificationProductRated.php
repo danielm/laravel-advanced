@@ -10,7 +10,7 @@ use App\Models\Product;
 
 use App\Notifications\ProductRatedNotification;
 
-class SendNotificationProductRated
+class SendNotificationProductRated implements ShouldQueue
 {
     /**
      * Create the event listener.
