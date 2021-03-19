@@ -10,9 +10,11 @@ use Illuminate\Notifications\Notification;
 use App\Models\User;
 use App\Models\Product;
 
-class ProductRatedNotification extends Notification
+class ProductRatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    //public $connection = 'redis';// notification conection Queue
 
     private User $qualifier;
     private Product $product;
@@ -39,6 +41,19 @@ class ProductRatedNotification extends Notification
     public function via($notifiable)
     {
         return ['mail'];
+    }
+
+    /**
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array
+     */
+    public function viaQueues()
+    {
+        return [
+            'mail' => 'mail-queue',
+            //'slack' => 'slack-queue',
+        ];
     }
 
     /**

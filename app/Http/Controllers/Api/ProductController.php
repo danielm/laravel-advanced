@@ -12,6 +12,8 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductCollection;
 
+use App\Jobs\SendProductCreatedEmail;
+
 class ProductController extends Controller
 {
     /**
@@ -37,6 +39,8 @@ class ProductController extends Controller
         ];
 
         $product = Product::create($data);
+
+        $this->dispatch(new SendProductCreatedEmail($request->user()->email));
 
         return new ProductResource($product);
     }
