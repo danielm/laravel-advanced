@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductCollection(Product::latest()->with('createdBy')->paginate());
+        return new ProductCollection(Product::latest()->with(['createdBy', 'category'])->paginate());
     }
 
     /**

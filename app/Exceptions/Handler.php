@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\CustomException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -35,7 +36,25 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
-        });
+            //dd($e->getMessage());
+
+            //return false;
+        });//->stop();
+
+        /*$this->renderable(function (Throwable $e, $request) {
+            return response()->view('errors.invalid-order', [], 500);
+        });*/
     }
+
+    /**
+     * Get the default context variables for logging.
+     *
+     * @return array
+     */
+    /*protected function context()
+    {
+        return array_merge(parent::context(), [
+            'foo' => 'bar',
+        ]);
+    }*/
 }

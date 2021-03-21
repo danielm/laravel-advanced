@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +11,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Exceptions\CustomException;
 use App\Models\User;
+use Illuminate\Support\Facades\Route;
 use App\Notifications\PingNotification;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/exception', function(){
+    throw new \Exception('This is a Fake Exception, just like News!');
+});
 
+Route::get('/custom-config', function(){
+    $throw_custom_exception = config('custom.thow_exception');
 
+    if ($throw_custom_exception){
+        throw new CustomException($throw_custom_exception);
+    }
+
+    dd($throw_custom_exception);
+});
+
+Route::get('/server-error', function(){
+    abort(500);
+});
 
 Route::get('/notification', function () {
     $user = User::find(1);
