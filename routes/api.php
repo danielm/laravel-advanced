@@ -25,6 +25,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
 
+    //->middleware('can:update,product');
+    //->middleware('can:create,App\Models\Product');
+
     Route::post('rating/category/{category}', [RatingController::class, 'category'])->name('rating.category');
     Route::post('rating/product/{product}', [RatingController::class, 'product'])->name('rating.product');
 });

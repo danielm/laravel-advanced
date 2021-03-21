@@ -17,6 +17,17 @@ use App\Jobs\SendProductCreatedEmail;
 class ProductController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -65,6 +76,11 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
+        //$this->authorize('update', $product);
+        // if ($request->user()->cannot('create', Product::class)) {
+        //     abort(403);
+        // }
+
         $product->update($request->validated());
 
         return response()->json(new ProductResource($product));
