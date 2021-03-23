@@ -16,13 +16,17 @@ class ProductControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    private User $user;
+
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->user = User::factory()->create();
+
         Category::factory()->create();
         Sanctum::actingAs(
-            User::factory()->create(),
+            $this->user,
             ['*']
         );
     }
@@ -102,7 +106,11 @@ class ProductControllerTest extends TestCase
 
     public function test_delete_product()
     {
-        $product = Product::factory()->create();
+        $this->withoutExceptionHandling();
+
+        $product = Product::factory()->create([
+            'created_by' => $this->user->id
+        ]);
 
         $response = $this->deleteJson(route('products.destroy', $product));
 
