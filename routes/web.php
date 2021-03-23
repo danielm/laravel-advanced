@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('/home', 'home');
+
 Route::get('/exception', function(){
     throw new \Exception('This is a Fake Exception, just like News!');
 });

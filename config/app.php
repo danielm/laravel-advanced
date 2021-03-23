@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\RatingProvider;
+
 return [
 
     /*
@@ -176,6 +178,7 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        RatingProvider::class
 
     ],
 
